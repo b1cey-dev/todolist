@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #f5f5f7;
+    overflow: hidden;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+}
+
+@layer utilities {
+  .traffic-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .traffic-light-close {
+    background: #ff5f57;
+  }
+  
+  .traffic-light-minimize {
+    background: #ffbd2e;
+  }
+  
+  .traffic-light-maximize {
+    background: #28ca42;
+  }
+  
+  .toolbar-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
+  }
+  
+  .toolbar-icon:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .toolbar-icon.active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+    font-size: 14px;
+    color: #1d1d1f;
+  }
+  
+  .sidebar-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .sidebar-item.selected {
+    background-color: rgba(0, 0, 0, 0.08);
+    font-weight: 500;
+  }
+}

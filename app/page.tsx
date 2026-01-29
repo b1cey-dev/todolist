@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 
 interface Todo {
   id: number;
@@ -124,13 +125,15 @@ export default function Home() {
   };
 
   const handleToggleComplete = async (id: number, completed: boolean) => {
+    const willBeCompleted = !completed;
+    
     try {
       const response = await fetch(`/api/todos/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ completed: !completed }),
+        body: JSON.stringify({ completed: willBeCompleted }),
       });
 
       if (response.ok) {
@@ -138,6 +141,33 @@ export default function Home() {
         setTodos((prevTodos) =>
           prevTodos.map((todo) => (todo.id === id ? updatedTodo : todo))
         );
+
+        // Trigger confetti when marking as completed
+        if (willBeCompleted && !completed) {
+          const duration = 3000;
+          const animationEnd = Date.now() + duration;
+          const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+          function randomInRange(min: number, max: number) {
+            return Math.random() * (max - min) + min;
+          }
+
+          const interval: NodeJS.Timeout = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            
+            confetti({
+              ...defaults,
+              particleCount,
+              origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+            });
+          }, 250);
+        }
       }
     } catch (error) {
       console.error('Error toggling todo:', error);
